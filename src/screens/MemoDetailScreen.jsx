@@ -19,7 +19,9 @@ export default function MemoDetailScreen() {
           テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが
         </Text>
       </ScrollView>
-      <CircleButton style={{ top: 160, bottom: 'auto' }}>+</CircleButton>
+      <CircleButton name="edit-2" style={{ top: 160, bottom: 'auto' }} />
+      {/* ここでnameをedit-2にすることでCircleButtonでplusというedit-2が読み込まれて、このページでは「🖊」が表示される */}
+      {/* ただし今回はhttps://icons.expo.fyiの中のfeatherの中のiconしか使えないので注意 */}
       {/* ここでのpropsをCircleButton.jsxに渡してスタイリングを上書きする */}
       {/* サークルボタンに直接styleを指定することができないので、CircleButton.jsxでpropsを受け取れるようにする必要がある */}
       {/* <Hello style={{ fontSize: 16 }}>Small World</Hello>
