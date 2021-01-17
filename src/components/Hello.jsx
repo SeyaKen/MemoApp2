@@ -18,6 +18,10 @@ export default function Hello(props) {
         {/* らず、そうするとスペースを作ることができないから。 */}
       </Text>
     </View>
+    //  <Hello style={{ fontSize: 16 }}>Small World</Hello>
+    //  {{}}の中にcssのスタイルを書く */}
+    //  ここではbang={true}だがbangだけでbang={true｝の意味になる */}
+    //  eslint-disable
   );
 }
 
