@@ -21,7 +21,6 @@ export default function Hello(props) {
     //  <Hello style={{ fontSize: 16 }}>Small World</Hello>
     //  {{}}の中にcssのスタイルを書く */}
     //  ここではbang={true}だがbangだけでbang={true｝の意味になる */}
-    //  eslint-disable
   );
 }
 
