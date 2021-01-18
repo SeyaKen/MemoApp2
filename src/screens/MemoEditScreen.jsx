@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  StyleSheet, TextInput, View, KeyboardAvoidingView,
+  StyleSheet, TextInput, View, KeyboardAvoidingView, Alert,
 } from 'react-native';
 import AppBar from '../components/AppBar';
 import CircleButton from '../components/CircleButton';
@@ -16,6 +16,7 @@ export default function MemoEditScreen() {
         {/* multilieを指定することでdefaultで一行だけのTextInputを何行も入力できるようにできる */}
       </View>
       <CircleButton name="check" />
+      {/* onPressがどのような動きになるのかをここで指定する。{() => {ここに指定する}} */}
     </KeyboardAvoidingView>
   );
 }

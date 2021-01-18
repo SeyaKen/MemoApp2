@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  StyleSheet, TextInput, View, Text,
+  StyleSheet, TextInput, View, Text, TouchableOpacity,
 } from 'react-native';
 
 import AppBar from '../components/AppBar';
@@ -14,10 +14,15 @@ export default function SignUpScreen() {
         <Text style={styles.title}>Sign Up</Text>
         <TextInput style={styles.input} value="Email Address" />
         <TextInput style={styles.input} value="Password" />
-        <Button label="Submit" />
+        <Button label="Submit" onPress={() => {}} />
+        {/* onPressにButtonで受け取ってもらう関数の動きを指定していく */}
+        {/* ButtonもTouchableOpacityと同じような挙動をしてくれる */}
         <View style={styles.footer}>
           <Text style={styles.footerText}>Already registered</Text>
-          <Text style={styles.footerLink}>Log In.</Text>
+          <TouchableOpacity>
+            <Text style={styles.footerLink}>Log In.</Text>
+          </TouchableOpacity>
+          {/* </TouchableOpacity>出ないと、onPressを指定できないのでここで指定 */}
         </View>
       </View>
     </View>

@@ -1,5 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import {
+  StyleSheet, Text, View, TouchableOpacity,
+} from 'react-native';
 import { Feather } from '@expo/vector-icons';
 // いちいちどのページでも読み込まないと使えないので注意
 export default function MemoList() {
@@ -11,12 +13,12 @@ export default function MemoList() {
           <Text style={styles.memoListItemDate}>2020/12/24 10:00</Text>
           {/* 左側 */}
         </View>
-        <View>
+        <TouchableOpacity>
           <Feather name="x" size={16} color="#b0b0b0" />
           {/* 直接cssを書ける */}
           {/* 上でFeatherを読み込んだから使える */}
           {/* 削除ボタン */}
-        </View>
+        </TouchableOpacity>
       </View>
     </View>
   );

@@ -1,20 +1,25 @@
-import { string } from 'prop-types';
+import { func, string } from 'prop-types';
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 
 export default function Button(props) {
-  const { label } = props;
+  const { label, onPress } = props;
   // labelはTextInputの中身をあらかじめ指定するときなんかに使われる
   return (
-    <View style={styles.buttonContainer}>
-      <Text style={styles.buttonLabel}>{label}</Text>
-    </View>
+    <TouchableOpacity style={styles.buttonContainer}>
+      <Text style={styles.buttonLabel} onPress={onPress}>{label}</Text>
+    </TouchableOpacity>
   );
 }
 
 Button.propTypes = {
   label: string.isRequired,
   // 空のボタンをせってすることはないので、isReauiredはあっている
+  onPress: func,
+};
+
+Button.defaultProps = {
+  onPress: null,
 };
 
 const styles = StyleSheet.create({
