@@ -4,6 +4,7 @@ import { bool, shape, string } from 'prop-types';
 
 export default function Hello(props) {
   const { children, bang, style } = props;
+  // propsの中から{}の中の値を受け取るという意味
   // boolはtrueかfalseしかとらないという意味
   return (
     <View>
