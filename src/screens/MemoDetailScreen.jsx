@@ -20,7 +20,7 @@ export default function MemoDetailScreen(props) {
         </Text>
       </ScrollView>
       <CircleButton
-        name="edit-2"
+        name="plus"
         style={{ top: 60, bottom: 'auto' }}
         onPress={() => {
           navigation.navigate('MemoEdit');
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
   memoHeader: {
     height: 96,
     justifyContent: 'center',
-    paddigVertical: 24,
+    paddingVertical: 24,
     paddingHorizontal: 19,
     backgroundColor: '#467fd3',
   },

@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import {
   StyleSheet, TextInput, View, Text, TouchableOpacity,
+  Alert,
 } from 'react-native';
+import firebase from 'firebase';
 
 import Button from '../components/Button';
 
@@ -11,6 +13,32 @@ export default function LogInScreen(props) {
   const [password, setPassword] = useState('');
   // 一つ上のnavigationとおなじでuseState('初期値')という配列から、emailとsetEmailという値を取り出している。
   // 最初のemailには保持したい内容が入り、setEmailには更新したい内容が入る
+
+  function handlePress() {
+    firebase.auth().signInWithEmailAndPassword(email, password)
+    // https://firebase.google.com/docs/auth/web/password-auth?hl=jaに詳しく乗ってるが、毎回このようにsignIn画面に書くのがお決まりになっているらしい↓のも
+      .then((userCredential) => {
+        const { user } = userCredential;
+        console.log(user.uid);
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'MemoList' }],
+        });
+        // onPress={() => { navigation.reset({
+        // index: 0,
+        // 履歴の一番目だけを表指示するという意味
+        // routes: [{ name: 'MemoList' }],
+        // });
+        // }}のように指定することで、routesで指定した値に履歴を上書きする。今回の場合だと、signinして、MemoListに移動した時backボタンを消せる。
+      })
+    // then(ここに会員登録が成功したときの関数を書く)
+    // 上のconstで値をしてしているので、ここで、emialとpasswordを使うことができる。
+      .catch((error) => {
+        Alert.alert(error.code);
+        // Alertを使いエラーコードを出力
+      });
+    // catchにはerrorの時の処理を書くことができる。
+  }
   return (
     <View style={styles.create}>
       <View style={styles.inner}>
@@ -44,12 +72,7 @@ export default function LogInScreen(props) {
         />
         <Button
           label="Submit"
-          onPress={() => {
-            navigation.reset({
-              index: 0,
-              routes: [{ name: 'MemoList' }],
-            });
-          }}
+          onPress={handlePress}
           // onPress={() => { navigation.reset({
             // index: 0,
             // 履歴の一番目だけを表指示するという意味
@@ -95,7 +118,7 @@ const styles = StyleSheet.create({
     height: 48,
     borderColor: '#ddd',
     borderWidth: 1,
-    backkgroundColor: '#fff',
+    backgroundColor: '#fff',
     paddingHorizontal: 8,
     marginBottom: 16,
   },
