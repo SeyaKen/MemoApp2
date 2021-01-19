@@ -5,7 +5,7 @@ import {
 import { Feather } from '@expo/vector-icons';
 // いちいちどのページでも読み込まないと使えないので注意
 import { useNavigation } from '@react-navigation/native';
-
+// useNavigationはreacthooksの一種
 export default function MemoList() {
   const navigation = useNavigation();
   // この設定をすることで、useNavigationをnavigationとして使える

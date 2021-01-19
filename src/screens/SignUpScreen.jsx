@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet, TextInput, View, Text, TouchableOpacity,
 } from 'react-native';
@@ -7,12 +7,41 @@ import Button from '../components/Button';
 
 export default function SignUpScreen(props) {
   const { navigation } = props;
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  // 一つ上のnavigationとおなじでuseState('初期値')という配列から、emailとsetEmailという値を取り出している。
+  // 最初のemailには保持したい内容が入り、setEmailには更新したい内容が入る
   return (
     <View style={styles.create}>
       <View style={styles.inner}>
         <Text style={styles.title}>Sign Up</Text>
-        <TextInput style={styles.input} value="Email Address" />
-        <TextInput style={styles.input} value="Password" />
+        <TextInput
+          style={styles.input}
+          value={email}
+          onChangeText={(text) => { setEmail(text); }}
+          // ユーザーが打ち込んだ値を引数引数textとして受け取って、setEmailの中で使い打ち込まれるごとに、値を更新している
+          //  ここでうえで設定した、emailとsetEmailを使う
+          // onChangetext={(text) => { setEmail(text); }}を指定することで、ユーザーが入力した値を受け取れる
+          autoCapitalize="none"
+          // 最初の文字を大文字にしない設定
+          keyboardType="email-address"
+          // キーボードのタイプをemailaddressようにしてくれる
+          placeholder="Email Adress"
+          // デフォルトでうっすらと文字を入力しといてくれる
+          textContentType="emailAddress"
+          // これを設定することで、iosの場合自動でメールアドレスとパスワードをとってきてくれる
+        />
+        <TextInput
+          style={styles.input}
+          value={password}
+          onChangeText={(text) => { setPassword(text); }}
+          autoCapitalize="none"
+          // 最初の文字を大文字にしない設定
+          placeholder="Password"
+          secureTextEntry
+          // パスワードを入力するとき●にしてくれる
+          textContentType="password"
+        />
         <Button
           label="Submit"
           onPress={() => {
