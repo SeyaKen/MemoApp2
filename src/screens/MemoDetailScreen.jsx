@@ -2,13 +2,13 @@ import React from 'react';
 import {
   StyleSheet, ScrollView, View, Text,
 } from 'react-native';
-import AppBar from '../components/AppBar';
 import CircleButton from '../components/CircleButton';
 
-export default function MemoDetailScreen() {
+export default function MemoDetailScreen(props) {
+  const { navigation } = props;
+  // App.jsxに登録した画面には自動的にnavigationというpropsが渡される
   return (
     <View style={styles.container}>
-      <AppBar />
       <View style={styles.memoHeader}>
         <Text style={styles.memoTitle}>買い物リスト</Text>
         <Text style={styles.memoDate}>2020/12/24 10:00</Text>
@@ -19,7 +19,16 @@ export default function MemoDetailScreen() {
           テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが
         </Text>
       </ScrollView>
-      <CircleButton name="edit-2" style={{ top: 160, bottom: 'auto' }} />
+      <CircleButton
+        name="edit-2"
+        style={{ top: 60, bottom: 'auto' }}
+        onPress={() => {
+          navigation.navigate('MemoEdit');
+          // navigation.navigate('MemoEdit');の意味はapp.jsxで指定した名前を('')の中に指定することで、
+          // そこにonPressしたら移動しますよという意味
+        }}
+      />
+      {/* onPress={() => {ここに指定したい動きのかんすうを指定する}} */}
       {/* ここでnameをedit-2にすることでCircleButtonでplusというedit-2が読み込まれて、このページでは「🖊」が表示される */}
       {/* ただし今回はhttps://icons.expo.fyiの中のfeatherの中のiconしか使えないので注意 */}
       {/* ここでのpropsをCircleButton.jsxに渡してスタイリングを上書きする */}
@@ -30,6 +39,12 @@ export default function MemoDetailScreen() {
     </View>
   );
 }
+
+// MemoDetailScreen.propTypes = {
+//   navigation: shape({
+//     navigate: func,
+//   }).isRequired,
+// };を指定する必要があるが、
 
 const styles = StyleSheet.create({
   container: {

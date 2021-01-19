@@ -3,23 +3,43 @@ import {
   StyleSheet, TextInput, View, Text, TouchableOpacity,
 } from 'react-native';
 
-import AppBar from '../components/AppBar';
 import Button from '../components/Button';
 
-export default function SignUpScreen() {
+export default function SignUpScreen(props) {
+  const { navigation } = props;
   return (
     <View style={styles.create}>
-      <AppBar />
       <View style={styles.inner}>
         <Text style={styles.title}>Sign Up</Text>
         <TextInput style={styles.input} value="Email Address" />
         <TextInput style={styles.input} value="Password" />
-        <Button label="Submit" onPress={() => {}} />
+        <Button
+          label="Submit"
+          onPress={() => {
+            navigation.reset({
+              index: 0,
+              routes: [{ name: 'MemoList' }],
+            });
+          }}
+          // onPress={() => { navigation.reset({
+            // index: 0,
+            // 履歴の一番目だけを表指示するという意味
+            // routes: [{ name: 'MemoList' }],
+          // });
+          // }}のように指定することで、routesで指定した値に履歴を上書きする。今回の場合だと、signinして、MemoListに移動した時backボタンを消せる。
+        />
         {/* onPressにButtonで受け取ってもらう関数の動きを指定していく */}
         {/* ButtonもTouchableOpacityと同じような挙動をしてくれる */}
         <View style={styles.footer}>
           <Text style={styles.footerText}>Already registered</Text>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.reset({
+                index: 0,
+                routes: [{ name: 'LogIn' }],
+              });
+            }}
+          >
             <Text style={styles.footerLink}>Log In.</Text>
           </TouchableOpacity>
           {/* </TouchableOpacity>出ないと、onPressを指定できないのでここで指定 */}

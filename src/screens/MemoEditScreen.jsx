@@ -1,21 +1,26 @@
 import React from 'react';
 import {
-  StyleSheet, TextInput, View, KeyboardAvoidingView, Alert,
+  StyleSheet, TextInput, View, KeyboardAvoidingView,
 } from 'react-native';
-import AppBar from '../components/AppBar';
 import CircleButton from '../components/CircleButton';
 
-export default function MemoEditScreen() {
+export default function MemoEditScreen(props) {
+  const { navigation } = props;
   return (
     <KeyboardAvoidingView style={styles.container} behavior="height">
       {/* KeyboardAvoidingViewを設定することで、キーボードが出ても、ボタンが隠れなくなる今回の場合 */}
-      <AppBar />
       <View style={styles.inputContainer}>
         <TextInput value="買い物リスト" multiline style={styles.input} />
         {/* valueを指定することで、もともと書いておきたい文字を指定できる。 */}
         {/* multilieを指定することでdefaultで一行だけのTextInputを何行も入力できるようにできる */}
       </View>
-      <CircleButton name="check" />
+      <CircleButton
+        name="check"
+        onPress={() => {
+          navigation.goBack();
+          // navigation.navigateを指定してもいいが、goBackを指定することで、前の画面に戻ることもできる。
+        }}
+      />
       {/* onPressがどのような動きになるのかをここで指定する。{() => {ここに指定する}} */}
     </KeyboardAvoidingView>
   );
