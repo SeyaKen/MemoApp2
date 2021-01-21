@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+// useEffectはそのスクリーンに映った瞬間に何か処理を実行することができる。ただしくはレンダリングのたびに実行される。
 import {
   StyleSheet, TextInput, View, Text, TouchableOpacity,
   Alert,
@@ -13,6 +14,23 @@ export default function LogInScreen(props) {
   const [password, setPassword] = useState('');
   // 一つ上のnavigationとおなじでuseState('初期値')という配列から、emailとsetEmailという値を取り出している。
   // 最初のemailには保持したい内容が入り、setEmailには更新したい内容が入る
+
+  useEffect(() => {
+    const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+      // 今回の場合だとmemoList画面に移動した瞬間に案マウントされるがユーザのログイン状態を監視したままなので、
+      // unsubscribeという関数に代入して下のrerutnでその関数を実行すると、画面が遷移する瞬間にユーザーのログイン状態の監視を辞めることができる。
+      if (user) {
+        // もしユーザーがいればLogIn画面に言った瞬間にmemolist画面に遷移する。正しくはレンダリングのたびに実行される
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'MemoList' }],
+        });
+      }
+    });
+    return unsubscribe;
+    // 画面が遷移する瞬間にここで上で定義した関数unsubscribeを実行することで監視をキャンセルできる
+  }, []);
+  // ここに[]を設定しておくことで、一回だけcallbackを行うということを指定できる、もしくは[]の中に指定した文字が更新されたら、callbackが実行される。
 
   function handlePress() {
     firebase.auth().signInWithEmailAndPassword(email, password)
@@ -47,7 +65,7 @@ export default function LogInScreen(props) {
           style={styles.input}
           value={email}
           onChangeText={(text) => { setEmail(text); }}
-          // ユーザーが打ち込んだ値を引数引数textとして受け取って、setEmailの中で使い打ち込まれるごとに、値を更新している
+          // ユーザーが打ち込んだ値を引数textとして受け取って、setEmailの中で使い打ち込まれるごとに、値を更新している
           //  ここでうえで設定した、emailとsetEmailを使う
           // onChangetext={(text) => { setEmail(text); }}を指定することで、ユーザーが入力した値を受け取れる
           autoCapitalize="none"

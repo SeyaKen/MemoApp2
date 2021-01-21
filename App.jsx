@@ -27,7 +27,7 @@ export default function App() {
     // ここから下の処理で画面をreact navigatorに登録
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="SignUp"
+        initialRouteName="LogIn"
         screenOptions={{
           headerStyle: { backgroundColor: '#467fd3' },
           // headerStyleを使って、ヘッダーのスタイルを指定する
@@ -74,3 +74,5 @@ export default function App() {
     </NavigationContainer>
   );
 }
+
+// (引数) ＝＞ {ここに処理の内容を書く}
