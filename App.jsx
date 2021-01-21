@@ -14,13 +14,16 @@ import SignUpScreen from './src/screens/SignUpScreen';
 
 import { firebaseConfig } from './env';
 
-const Stack = createStackNavigator();
+require('firebase/firestore');
+// firestoreを使う処理をここに書く
 
 if (firebase.apps.length === 0) {
   // firebaseの中のあぷりの数が一個もなかったら、という意味
   firebase.initializeApp(firebaseConfig);
 // firebase初期化する
 }
+
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
