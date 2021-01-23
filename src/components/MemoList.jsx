@@ -13,6 +13,7 @@ import {
 // memosのpropTypesを定義するためにshapeを読み込み、その中のbodyTextは文字列だから、stringも読み込む、
 // さらにupdatedAtはデータ型だから、instanceOfを読み込む
 // arrayOfは配列であるということを示すprop-typesの関数
+import { dateToString } from '../utils';
 
 export default function MemoList(props) {
   const { memos } = props;
@@ -28,7 +29,8 @@ export default function MemoList(props) {
         // 下でkeyを指定しているのでここでしてしなくてもいい
         // keyを指定しないといけないルールがreactにはある
         style={styles.memoListItem}
-        onPress={() => { navigation.navigate('MemoDetail'); }}
+        onPress={() => { navigation.navigate('MemoDetail', { id: item.id }); }}
+        // idを取得
         // nvigation.navigateを使いたいが、navigationを使えるのはApp.jsxに登録されてる画面だけ。
         // そのため、useNavigation使う
       >
@@ -41,7 +43,7 @@ export default function MemoList(props) {
             {item.bodyText}
           </Text>
           {/* mapでforeachっぽくしたmemoの中のbodyText */}
-          <Text style={styles.memoListItemDate}>{String(item.updatedAt)}</Text>
+          <Text style={styles.memoListItemDate}>{dateToString(item.updatedAt)}</Text>
           {/* 左側 */}
         </View>
         <TouchableOpacity
