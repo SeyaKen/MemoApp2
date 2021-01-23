@@ -1,25 +1,47 @@
 import React from 'react';
 import {
-  StyleSheet, Text, View, TouchableOpacity, Alert,
+  StyleSheet, Text, View, TouchableOpacity, Alert, FlatList,
+  // FlatListを使って画面に映ってる部分だけをレンダリングする機能をつけていく
 } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 // いちいちどのページでも読み込まないと使えないので注意
 import { useNavigation } from '@react-navigation/native';
 // useNavigationはreacthooksの一種
-export default function MemoList() {
+import {
+  shape, string, instanceOf, arrayOf,
+} from 'prop-types';
+// memosのpropTypesを定義するためにshapeを読み込み、その中のbodyTextは文字列だから、stringも読み込む、
+// さらにupdatedAtはデータ型だから、instanceOfを読み込む
+// arrayOfは配列であるということを示すprop-typesの関数
+
+export default function MemoList(props) {
+  const { memos } = props;
+  // MemoListScreenから渡ってきたpropsからmemosを取得
   const navigation = useNavigation();
   // この設定をすることで、useNavigationをnavigationとして使える
-  return (
-    <View>
+
+  function renderItem({ item }) {
+  // 下で使うrenderItemという関数をここで定義
+    return (
       <TouchableOpacity
+        // key={item.id}
+        // 下でkeyを指定しているのでここでしてしなくてもいい
+        // keyを指定しないといけないルールがreactにはある
         style={styles.memoListItem}
         onPress={() => { navigation.navigate('MemoDetail'); }}
         // nvigation.navigateを使いたいが、navigationを使えるのはApp.jsxに登録されてる画面だけ。
-  // そのため、useNavigation使う
+        // そのため、useNavigation使う
       >
         <View>
-          <Text style={styles.memoListItemTitle}>買い物リスト</Text>
-          <Text style={styles.memoListItemDate}>2020/12/24 10:00</Text>
+          <Text
+            style={styles.memoListItemTitle}
+            numberOfLines={1}
+            // memoListの表示を1行にする処理。
+          >
+            {item.bodyText}
+          </Text>
+          {/* mapでforeachっぽくしたmemoの中のbodyText */}
+          <Text style={styles.memoListItemDate}>{String(item.updatedAt)}</Text>
           {/* 左側 */}
         </View>
         <TouchableOpacity
@@ -32,9 +54,36 @@ export default function MemoList() {
           {/* 削除ボタン */}
         </TouchableOpacity>
       </TouchableOpacity>
+    );
+  }
+
+  return (
+    <View>
+      <FlatList
+        data={memos}
+        // dataはMemoListScreenで指定した、memosだよという意味
+        renderItem={renderItem}
+        // renderingするのは{renderItem}という関数という意味上で指定する必要がある
+        keyExtracter={(item) => item.id}
+      />
+      {/* 下のkey={memo.id}と同じ意味 */}
+      {/* {memos.map((memo) => ( */}
+      {/* memosはforEachみたいなもん */}
     </View>
   );
 }
+
+MemoList.propTypes = {
+  memos: arrayOf(shape({
+    id: string,
+    bodyText: string,
+    updatedAt: instanceOf(Date),
+  })).isRequired,
+  // shapeだとobjectが一つだけという意味になるから、arrayOfを使いそれが配列で何個もあるということを定義する
+  // memosはobjectの配列のためここではshapeを使用,
+  // shapeでオブジェクトの中身がどのような内容になっているのかを指定
+  // memosがないとmemoListが表示されないから、isReaquired
+};
 
 const styles = StyleSheet.create({
   memoListItem: {
