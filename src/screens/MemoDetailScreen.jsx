@@ -76,7 +76,8 @@ export default function MemoDetailScreen(props) {
         name="plus"
         style={{ top: 60, bottom: 'auto' }}
         onPress={() => {
-          navigation.navigate('MemoEdit');
+          navigation.navigate('MemoEdit', { id: memo.id, bodyText: memo.bodyText });
+          // メモ編集画面に移動するときにidとbodyTextを渡すことでfirebaseからデータを取得
           // navigation.navigate('MemoEdit');の意味はapp.jsxで指定した名前を('')の中に指定することで、
           // そこにonPressしたら移動しますよという意味
         }}
