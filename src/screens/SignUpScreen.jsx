@@ -18,9 +18,7 @@ export default function SignUpScreen(props) {
   function handlePress() {
     firebase.auth().createUserWithEmailAndPassword(email, password)
     // https://firebase.google.com/docs/auth/web/password-auth?hl=jaに詳しく乗ってるが、毎回このようにsignup画面に書くのがお決まりになっているらしい↓のも
-      .then((userCredential) => {
-        const { user } = userCredential;
-        console.log(user.uid);
+      .then(() => {
         navigation.reset({
           index: 0,
           routes: [{ name: 'MemoList' }],
@@ -35,7 +33,6 @@ export default function SignUpScreen(props) {
     // then(ここに会員登録が成功したときの関数を書く)
     // 上のconstで値をしてしているので、ここで、emialとpasswordを使うことができる。
       .catch((error) => {
-        console.log(error.code, error.message);
         // console上にエラーコードとエラーメッセージを表示する処理
         const errorMsg = translateErrors(error.code);
         Alert.alert(errorMsg.title, errorMsg.description);

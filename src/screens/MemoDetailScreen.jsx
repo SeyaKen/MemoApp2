@@ -14,7 +14,6 @@ import { dateToString } from '../utils';
 export default function MemoDetailScreen(props) {
   const { navigation, route } = props;
   const { id } = route.params;
-  console.log(id);
   // routeの中のparamsからidを取得するという意味
   // navigationもrouteもreactnativeによってもともと設定されているprops。routeというオブジェクトの中にparamsというオブジェクトのなかにidが入っている
   // 下のpropTypesで定義するからそこを見ればいい
@@ -33,7 +32,6 @@ export default function MemoDetailScreen(props) {
       // dbにfirebase.firestoreからの情報を代入
       const ref = db.collection(`users/${currentUser.uid}/memos`).doc(id);
       unsubscribe = ref.onSnapshot((doc) => {
-        console.log(doc.id, doc.data());
         const data = doc.data();
         // dataにdocの中のdataを代入
         setMemo({

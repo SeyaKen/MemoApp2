@@ -47,7 +47,7 @@ export default function MemoListScreen(props) {
         // userMemosというからの配列を準備
         snapshot.forEach((doc) => {
         // snapshotという配列の中身の一つ一つのdocという要素にこの下でforEachで処理を加えていく
-          console.log(doc.id, doc.data());
+
           // コンソール上にdocのidとdocのdataを表示する処理
           // dataは関数
           const data = doc.data();
@@ -64,9 +64,8 @@ export default function MemoListScreen(props) {
         // setMemosを使い上で作ったuserMemos配列で、memosを更新
         setLoading(false);
         // 終わったら、ぐるぐるのアニメーションを無くす
-      }, (error) => {
+      }, () => {
         // onSnapshotでリストを取得できなかったときの処理
-        console.log(error);
         setLoading(false);
         Alert.alert('データの読み込みに失敗しました。');
         // errorメッセージをコンソール上とユーザーに知らせる

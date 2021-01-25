@@ -42,9 +42,7 @@ export default function LogInScreen(props) {
     setLoading(true);
     firebase.auth().signInWithEmailAndPassword(email, password)
     // https://firebase.google.com/docs/auth/web/password-auth?hl=jaに詳しく乗ってるが、毎回このようにsignIn画面に書くのがお決まりになっているらしい↓のも
-      .then((userCredential) => {
-        const { user } = userCredential;
-        console.log(user.uid);
+      .then(() => {
         navigation.reset({
           index: 0,
           routes: [{ name: 'MemoList' }],

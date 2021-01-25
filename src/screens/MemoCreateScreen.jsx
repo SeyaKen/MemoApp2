@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 // ユーザーが入力した情報を受け取るためにuseStateをここで読み込む
 import {
-  StyleSheet, TextInput, View, KeyboardAvoidingView,
+  StyleSheet, TextInput, View, KeyboardAvoidingView, Alert,
 } from 'react-native';
 
 import firebase from 'firebase';
 
 import CircleButton from '../components/CircleButton';
+import { translateErrors } from '../utils';
 
 export default function MemoCreateScreen(props) {
   const { navigation } = props;
@@ -34,14 +35,14 @@ export default function MemoCreateScreen(props) {
       updatedAt: new Date(),
       // new Date()とすることで、時間を返してくれる
     })
-      .then((docRef) => {
+      .then(() => {
         // documentへのreferenceの作成
-        console.log('Created!', docRef.id);
         // docRefで参照し、それに.idと加えることで、idを受け取ることができる。
       })
       .catch((error) => {
         // catch()の中でerrorを受け取っている
-        console.log('Effof!', error);
+        const errorMsg = translateErrors(error.code);
+        Alert.alert(errorMsg.title, errorMsg.description);
       });
     navigation.goBack();
   }
