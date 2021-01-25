@@ -8,6 +8,7 @@ import firebase from 'firebase';
 
 import Button from '../components/Button';
 import Loading from '../components/Loading';
+import { translateErrors } from '../utils';
 
 export default function LogInScreen(props) {
   const { navigation } = props;
@@ -59,7 +60,9 @@ export default function LogInScreen(props) {
     // 上のconstで値をしてしているので、ここで、emialとpasswordを使うことができる。
       .catch((error) => {
         // catchにはerrorの時の処理を書くことができる。
-        Alert.alert(error.code);
+        const errorMsg = translateErrors(error.code);
+        // utilsで作ったtranslateErrorsからerrorの中のcodeをerrorMsgに代入
+        Alert.alert(errorMsg.title, errorMsg.description);
         // Alertを使いエラーコードを出力
       })
       .then(() => {

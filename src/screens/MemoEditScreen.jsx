@@ -7,6 +7,7 @@ import { shape, string } from 'prop-types';
 import firebase from 'firebase';
 
 import CircleButton from '../components/CircleButton';
+import { translateErrors } from '../utils';
 
 export default function MemoEditScreen(props) {
   const { navigation, route } = props;
@@ -36,7 +37,8 @@ export default function MemoEditScreen(props) {
           // 前の画面に戻る
         })
         .catch((error) => {
-          Alert.alert(error.code);
+          const errorMsg = translateErrors(error.code);
+          Alert.alert(errorMsg.title, errorMsg.description);
           // アラートメッセージにerrorの中のcodeを入れとく
         });
       // 成功したら、then失敗したら、catch

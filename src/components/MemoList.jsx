@@ -7,6 +7,7 @@ import { Feather } from '@expo/vector-icons';
 // いちいちどのページでも読み込まないと使えないので注意
 import { useNavigation } from '@react-navigation/native';
 // useNavigationはreacthooksの一種
+import firebase from 'firebase';
 import {
   shape, string, instanceOf, arrayOf,
 } from 'prop-types';
@@ -20,6 +21,32 @@ export default function MemoList(props) {
   // MemoListScreenから渡ってきたpropsからmemosを取得
   const navigation = useNavigation();
   // この設定をすることで、useNavigationをnavigationとして使える
+
+  function deleteMemo(id) {
+    const { currentUser } = firebase.auth();
+    // https://firebase.google.com/docs/auth/web/manage-users?hl=jaをみろ。要するにcurrentUserをfirebaseの中の、authの中から取り出している
+    if (currentUser) {
+      const db = firebase.firestore();
+      const ref = db.collection(`users/${currentUser.uid}/memos`).doc(id);
+      Alert.alert('メモを削除します。', 'よろしいですか？', [
+        {
+          text: 'キャンセル',
+          onPress: () => {},
+          // 何もしないからの空の関数
+        },
+        {
+          text: '削除する',
+          style: 'destructive',
+          // 文字が赤くなる
+          onPress: () => {
+            ref.delete().catch(() => {
+              Alert.alert('削除に失敗しました。');
+            });
+          },
+        },
+      ]);
+    }
+  }
 
   function renderItem({ item }) {
   // 下で使うrenderItemという関数をここで定義
@@ -48,7 +75,7 @@ export default function MemoList(props) {
         </View>
         <TouchableOpacity
           style={styles.memoDelete}
-          onPress={() => (Alert.alert('Are you sure?'))}
+          onPress={() => { deleteMemo(item.id); }}
         >
           <Feather name="x" size={16} color="#b0b0b0" />
           {/* 直接cssを書ける */}
