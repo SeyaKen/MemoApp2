@@ -7,6 +7,7 @@ import {
 import firebase from 'firebase';
 
 import Button from '../components/Button';
+import Loading from '../components/Loading';
 
 export default function LogInScreen(props) {
   const { navigation } = props;
@@ -14,6 +15,7 @@ export default function LogInScreen(props) {
   const [password, setPassword] = useState('');
   // 一つ上のnavigationとおなじでuseState('初期値')という配列から、emailとsetEmailという値を取り出している。
   // 最初のemailには保持したい内容が入り、setEmailには更新したい内容が入る
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
@@ -25,6 +27,9 @@ export default function LogInScreen(props) {
           index: 0,
           routes: [{ name: 'MemoList' }],
         });
+      } else {
+        setLoading(false);
+        // もしログインしていなければ、ぐるぐるを表示しない
       }
     });
     return unsubscribe;
@@ -33,6 +38,7 @@ export default function LogInScreen(props) {
   // ここに[]を設定しておくことで、一回だけcallbackを行うということを指定できる、もしくは[]の中に指定した文字が更新されたら、callbackが実行される。
 
   function handlePress() {
+    setLoading(true);
     firebase.auth().signInWithEmailAndPassword(email, password)
     // https://firebase.google.com/docs/auth/web/password-auth?hl=jaに詳しく乗ってるが、毎回このようにsignIn画面に書くのがお決まりになっているらしい↓のも
       .then((userCredential) => {
@@ -52,13 +58,18 @@ export default function LogInScreen(props) {
     // then(ここに会員登録が成功したときの関数を書く)
     // 上のconstで値をしてしているので、ここで、emialとpasswordを使うことができる。
       .catch((error) => {
+        // catchにはerrorの時の処理を書くことができる。
         Alert.alert(error.code);
         // Alertを使いエラーコードを出力
+      })
+      .then(() => {
+      // thenは成功しても失敗しても(catch)の時の処理
+        setLoading(false);
       });
-    // catchにはerrorの時の処理を書くことができる。
   }
   return (
     <View style={styles.create}>
+      <Loading isLoading={isLoading} />
       <View style={styles.inner}>
         <Text style={styles.title}>Log In</Text>
         <TextInput
