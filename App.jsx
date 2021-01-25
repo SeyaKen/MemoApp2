@@ -1,5 +1,7 @@
 import React from 'react';
 // https://reactnavigation.org/docs/hello-react-navigation/からコピペしてくる
+import { LogBox } from 'react-native';
+// LogBoxとはエラーを表示してくれてるやつ
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
 // CardStyleInterpolatorsをここで読み込む
@@ -16,6 +18,8 @@ import { firebaseConfig } from './env';
 
 require('firebase/firestore');
 // firestoreを使う処理をここに書く
+LogBox.ignoreLogs(['Setting a timer']);
+// LogBoxの処理を無効化
 
 if (firebase.apps.length === 0) {
   // firebaseの中のあぷりの数が一個もなかったら、という意味
@@ -24,6 +28,7 @@ if (firebase.apps.length === 0) {
 }
 
 const Stack = createStackNavigator();
+
 
 export default function App() {
   return (
