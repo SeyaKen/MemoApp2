@@ -29,7 +29,6 @@ if (firebase.apps.length === 0) {
 
 const Stack = createStackNavigator();
 
-
 export default function App() {
   return (
     // ここから下の処理で画面をreact navigatorに登録
@@ -37,7 +36,7 @@ export default function App() {
       <Stack.Navigator
         initialRouteName="LogIn"
         screenOptions={{
-          headerStyle: { backgroundColor: '#467fd3' },
+          headerStyle: { backgroundColor: '#000' },
           // headerStyleを使って、ヘッダーのスタイルを指定する
           headerTitleStyle: { color: '#fff' },
           // headerTitleStyleでヘッダーの文字のスタイルを指定

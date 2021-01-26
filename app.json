@@ -8,7 +8,7 @@
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "updates": {
@@ -18,12 +18,17 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "bundleIdentifier": "jp.keainkaiin.memoapp2",
+      "buildNumber": "1.0.0"
     },
     "android": {
+      "package": "jp.keainkaiin.memoapp2",
+      "versionCode": 1,
+      "permissions": [],
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "foregroundImage": "./assets/Group_4.png",
+        "backgroundImage": "./assets/Group_3.png"
       }
     },
     "web": {

@@ -28,7 +28,7 @@ Button.defaultProps = {
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    backgroundColor: '#467fd3',
+    backgroundColor: '#000',
     borderRadius: 4,
     alignSelf: 'flex-start',
     // alignSelfは自分自身を並べるという意味flex-startとは左揃えにしなさいという意味
